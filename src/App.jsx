@@ -14,34 +14,34 @@ function App() {
   }, []);
 
   return (
-    <div className="h-screen w-full flex flex-col justify-between items-center py-6 px-4 overflow-hidden bg-transparent text-[#f8fafc] antialiased select-none relative">
+    <div className="h-screen w-full flex flex-col items-center justify-center px-4 bg-transparent text-[#f8fafc] antialiased select-none relative overflow-hidden">
       
       {/* Fullscreen 3D WebGL Canvas Backdrop */}
       <AmbientGridBackground />
 
-      {/* Header */}
-      <header className="relative z-10 w-full max-w-5xl flex items-center justify-between py-2.5 px-4 bg-white/[0.01] backdrop-blur-md border border-white/5 rounded-full shadow-[0_0_15px_rgba(0,0,0,0.1)]">
+      {/* Header - Floating top */}
+      <header className="fixed top-4 sm:top-6 left-1/2 -translate-x-1/2 z-30 w-full max-w-6xl flex items-center justify-between py-2 sm:py-2.5 px-3 sm:px-4 bg-white/[0.02] backdrop-blur-lg border border-white/10 rounded-full shadow-[0_0_30px_rgba(34,211,238,0.1)] hover:border-white/20 transition-all duration-300">
         <div className="flex items-center gap-2">
-          <img src="/nestial-logo.png" alt="NESTIAL Logo" className="w-6 h-6 object-contain" />
+          <img src="/nestial-logo.png" alt="NESTIAL Logo" className="w-5 h-5 sm:w-6 sm:h-6 object-contain" />
           <span className="text-xs font-black tracking-[0.35em] text-white">NESTIAL</span>
         </div>
         <div className="flex items-center gap-1.5">
           <span className="inline-block w-1.5 h-1.5 bg-cyan-400 rounded-full animate-ping" />
-          <span className="text-[8px] font-bold tracking-widest text-cyan-400/90 uppercase font-mono">
+          <span className="text-[7px] sm:text-[8px] font-bold tracking-widest text-cyan-400/90 uppercase font-mono">
             System Synchronizer Active
           </span>
         </div>
       </header>
 
-      {/* Centered Main Diagnostics Card */}
-      <main className="relative z-10 w-full max-w-xl my-auto card-entry opacity-0">
+      {/* Centered Compact Card */}
+      <div className="relative z-20 w-full max-w-md card-entry opacity-0">
         <MaintenanceCard />
-      </main>
-
-      {/* Footer */}
-      <div className="relative z-10 w-full max-w-5xl">
-        <Footer />
       </div>
+
+      {/* Footer - Floating bottom */}
+      <footer className="fixed bottom-3 sm:bottom-6 left-1/2 -translate-x-1/2 z-30 w-full max-w-6xl px-4 flex justify-center">
+        <Footer />
+      </footer>
 
     </div>
   );

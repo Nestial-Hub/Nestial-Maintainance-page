@@ -233,7 +233,7 @@ function MiniForklift({ offset }) {
     if (group.current) {
       group.current.position.x = THREE.MathUtils.lerp(1.4, -1.5, cycle);
       group.current.position.y = -1.14 + Math.sin(time * 7) * 0.004;
-      group.current.position.z = 2.8;
+      group.current.position.z = 1.9;
       group.current.rotation.y = 0;
     }
     if (fork.current) {
@@ -241,7 +241,7 @@ function MiniForklift({ offset }) {
     }
   });
   return (
-    <group ref={group} scale={0.75}>
+    <group ref={group} scale={0.38}>
       {/* chassis */}
       <mesh position={[0, 0.1, 0]} castShadow>
         <boxGeometry args={[0.9, 0.22, 0.6]} />
@@ -303,139 +303,17 @@ function MiniForklift({ offset }) {
   );
 }
 
-// function NestialStack() {
-//   const blocks = [
-//   [-2.45,-0.5,0],
-//   [-2.45,0.05,0],
-//   [-2.45,0.6,0],
-//   [-2.45,1.15,0],
-//   [-2.45,1.7,0],
-
-//   [-1.9,0.05,0],
-//   [-1.9,1.15,0],
-
-//   [-2.45,2.25,0],
-//   [-1.9,2.8,0],
-// ];
-
-//   return (
-//     <group>
-//       {blocks.map((p,i)=>(
-//         <Float
-//           key={i}
-//           speed={1}
-//           rotationIntensity={0}
-//           floatIntensity={0.02}
-//         >
-//           <NestialBlock position={p} glow={1}/>
-//         </Float>
-//       ))}
-//     </group>
-//   );
-// }
-
-function ScaffoldTower() {
-  const levels = [0, 0.8, 1.6, 2.4, 3.2];
-
+function NestialStack() {
+  const stack = [];
+  for (let i = 0; i < 5; i++) stack.push([-2.2, -0.5 + i * 0.56, 0]);
+  for (let i = 0; i < 3; i++) stack.push([-2.2 + 0.56, -0.5 + i * 0.56, 0]);
   return (
-    <group position={[-2.4, -0.7, 0.5]}>
-
-      {/* Main Frame */}
-      {levels.map((y, i) => (
-        <group key={i} position={[0, y, 0]}>
-
-          {/* Left Pillar */}
-          <mesh position={[0, 0, 0]}>
-            <boxGeometry args={[0.08, 0.8, 0.08]} />
-            <meshStandardMaterial
-              color="#94a3b8"
-              metalness={1}
-              roughness={0.15}
-            />
-          </mesh>
-
-          {/* Right Pillar */}
-          <mesh position={[0.7, 0, 0]}>
-            <boxGeometry args={[0.08, 0.8, 0.08]} />
-            <meshStandardMaterial
-              color="#94a3b8"
-              metalness={1}
-              roughness={0.15}
-            />
-          </mesh>
-
-          {/* Horizontal Platform */}
-          <mesh position={[0.35, 0.32, 0]}>
-            <boxGeometry args={[0.75, 0.06, 0.12]} />
-            <meshStandardMaterial
-              color="#64748b"
-              metalness={0.8}
-              roughness={0.4}
-            />
-          </mesh>
-
-          {/* Cross Bracing */}
-          <mesh
-            position={[0.35, 0, 0]}
-            rotation={[0, 0, 0.75]}
-          >
-            <boxGeometry args={[0.9, 0.03, 0.03]} />
-            <meshStandardMaterial color="#475569" />
-          </mesh>
-
-          <mesh
-            position={[0.35, 0, 0]}
-            rotation={[0, 0, -0.75]}
-          >
-            <boxGeometry args={[0.9, 0.03, 0.03]} />
-            <meshStandardMaterial color="#475569" />
-          </mesh>
-        </group>
+    <group>
+      {stack.map((p, i) => (
+        <Float key={i} speed={1} rotationIntensity={0} floatIntensity={0.05}>
+          <NestialBlock position={p} glow={1} />
+        </Float>
       ))}
-
-      {/* Main Nestial Core */}
-      <group position={[0.35, 3.8, 0]}>
-        <NestialBlock glow={2.5} />
-
-        <pointLight
-          color="#22d3ee"
-          intensity={4}
-          distance={8}
-        />
-      </group>
-
-      {/* Side Construction Blocks */}
-      <group position={[1.1, 2.7, 0]}>
-        <NestialBlock glow={1.2} />
-      </group>
-
-      <group position={[1.1, 1.6, 0]}>
-        <NestialBlock glow={1.2} />
-      </group>
-
-      {/* Hanging Construction Module */}
-      <Float
-        speed={1.5}
-        rotationIntensity={0.2}
-        floatIntensity={0.15}
-      >
-        <group position={[0.9, 4.6, 0]}>
-          <NestialBlock glow={2} />
-        </group>
-      </Float>
-
-      {/* Construction Beacon */}
-      <mesh position={[0.35, 5.3, 0]}>
-        <sphereGeometry args={[0.08, 16, 16]} />
-        <meshBasicMaterial color="#22d3ee" />
-      </mesh>
-
-      <pointLight
-        position={[0.35, 5.3, 0]}
-        color="#22d3ee"
-        intensity={3}
-        distance={6}
-      />
     </group>
   );
 }
@@ -454,7 +332,7 @@ function PickupBlocks() {
 
 function WeldSparks({ position }) {
   const ref = useRef(null);
-  const count = 140;
+  const count = 60;
   const positions = useMemo(() => {
     const arr = new Float32Array(count * 3);
     return arr;
@@ -493,7 +371,7 @@ function WeldSparks({ position }) {
       <bufferGeometry>
         <bufferAttribute attach="attributes-position" args={[positions, 3]} />
       </bufferGeometry>
-      <pointsMaterial color="#fde68a" size={0.07} transparent opacity={0.95} blending={THREE.AdditiveBlending} depthWrite={false} />
+      <pointsMaterial color="#fde68a" size={0.04} transparent opacity={0.95} blending={THREE.AdditiveBlending} depthWrite={false} />
     </points>
   );
 }
@@ -521,19 +399,8 @@ function RobotWelder() {
   });
 
   return (
-     <group position={[2, -0.15, -0.8]}  rotation={[0,-0.65,0]} scale={1.35}>
+    <group position={[2.4, -0.3, 0]} scale={0.95}>
       {/* base */}
-      <mesh
-position={[-1.45,0.35,0]}
-rotation={[0,0,1.05]}
->
- <cylinderGeometry args={[0.01,0.03,2.6,8]} />
- <meshBasicMaterial
-   color="#22d3ee"
-   transparent
-   opacity={0.45}
- />
-</mesh>
       <mesh position={[0, -0.55, 0]} castShadow>
         <cylinderGeometry args={[0.45, 0.5, 0.1, 32]} />
         <meshStandardMaterial color="#0a0f1c" metalness={0.95} roughness={0.2} />
@@ -626,7 +493,7 @@ rotation={[0,0,1.05]}
           <meshStandardMaterial color="#1e293b" metalness={0.95} roughness={0.2} />
         </mesh>
         <pointLight ref={torch} position={[0, -0.7, 0.45]} color="#fde68a" intensity={2} distance={1.5} />
-        {sparkOn && <WeldSparks position={[-0.35, -0.7, 0.45]} />}
+        {sparkOn && <WeldSparks position={[0, -0.7, 0.45]} />}
         {/* weld beam */}
         <mesh position={[0, -0.85, 0.45]} rotation={[0, 0, 0]}>
           <cylinderGeometry args={[0.012, 0.04, 0.35, 8, 1, true]} />
@@ -664,7 +531,7 @@ function FuturisticLaptop() {
     }
   });
   return (
-    <group position={[2.4, -1.25, 0.6]} rotation={[0, -0.6, 0] }scale={0.7}>
+    <group position={[2.4, -1.05, 0.6]} rotation={[0, -0.3, 0]}>
       {/* base */}
       <mesh castShadow receiveShadow>
         <boxGeometry args={[1.6, 0.05, 1.1]} />
@@ -776,19 +643,13 @@ function Scene() {
   return (
     <>
       <color attach="background" args={["#04060d"]} />
-      <fog attach="fog" args={["#04060d", 4, 14]} />
+      <fog attach="fog" args={["#04060d", 6, 18]} />
       <ambientLight intensity={0.25} />
       <directionalLight position={[5, 6, 4]} intensity={0.6} color="#93c5fd" castShadow shadow-mapSize={[1024, 1024]} />
       <pointLight position={[-3, 2, 2]} color={NEON} intensity={1.2} distance={8} />
       <pointLight position={[3, 2, 2]} color={NEON2} intensity={1.2} distance={8} />
-      {/* <Stars radius={40} depth={30} count={1500} factor={3} fade speed={0.6} /> */}
-      <Sparkles
-        count={25}
-        scale={[12, 6, 6]}
-        size={1}
-        speed={0.2}
-        color={NEON}
-      />
+      <Stars radius={40} depth={30} count={1500} factor={3} fade speed={0.6} />
+      <Sparkles count={80} scale={[8, 4, 4]} size={2} speed={0.3} color={NEON} />
 
       <CameraRig />
 
@@ -796,11 +657,11 @@ function Scene() {
       <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -1.3, 0]} receiveShadow>
         <planeGeometry args={[40, 40]} />
         <MeshReflectorMaterial
-          mirror={0.2}
+          mirror={0.6}
           blur={[300, 100]}
           resolution={1024}
           mixBlur={1}
-          mixStrength={0.4}
+          mixStrength={1.2}
           roughness={0.6}
           depthScale={1.1}
           minDepthThreshold={0.4}
@@ -812,20 +673,20 @@ function Scene() {
       {/* grid lines */}
       <gridHelper args={[20, 40, NEON, "#0e1a2e"]} position={[0, -1.29, 0]} />
 
-      {/* <FloatingDialog /> */}
+      <FloatingDialog />
       <HoloPlatform position={[-2.2, -1.27, 0]} radius={1.1} />
       <HoloPlatform position={[2.4, -1.27, 0.3]} radius={1.3} />
-      {/* <NestialStack /> */}
-      <ScaffoldTower />
-      {/* <PickupBlocks /> */}
-      <MiniExcavator offset={1.2} />
-      {/* <MiniExcavator offset={2.4} /> */}
+      <NestialStack />
+      <PickupBlocks />
+      <MiniExcavator offset={0} />
+      <MiniExcavator offset={2.4} />
       <MiniForklift offset={1.2} />
+
       <RobotWelder />
       <FuturisticLaptop />
 
       <ContactShadows position={[0, -1.28, 0]} opacity={0.55} scale={14} blur={2.5} far={4} />
-      <Environment preset="night" />
+      <Environment preset="city" />
       <EffectComposer multisampling={0}>
         <Bloom intensity={0.9} luminanceThreshold={0.35} luminanceSmoothing={0.4} mipmapBlur radius={0.8} />
         <ChromaticAberration blendFunction={BlendFunction.NORMAL} offset={chromaticAberrationOffset} radialModulation={false} modulationOffset={0} />
@@ -853,10 +714,7 @@ export default function AmbientGridBackground() {
 
       {/* 3D WebGL Canvas */}
       <div className="absolute inset-0 z-0 pointer-events-none">
-        <Canvas shadows dpr={[1, 2]} camera={{
-          position: [0, 0.5, 4.8],
-          fov: 38
-        }}
+        <Canvas shadows dpr={[1, 2]} camera={{ position: [0, 0.4, 7], fov: 50 }}
           gl={{ antialias: true, powerPreference: "high-performance" }}>
           <Suspense fallback={null}>
             <Scene />
