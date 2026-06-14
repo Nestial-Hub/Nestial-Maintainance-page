@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import gsap from 'gsap';
-import CanvasContainer from './components/CanvasContainer';
+import AmbientGridBackground from './components/AmbientGridBackground';
 import MaintenanceCard from './components/MaintenanceCard';
 import Footer from './components/Footer';
 
@@ -14,10 +14,10 @@ function App() {
   }, []);
 
   return (
-    <div className="h-screen w-full flex flex-col justify-between items-center py-6 px-4 overflow-hidden bg-[#0c0d12] text-[#f8fafc] antialiased select-none relative">
+    <div className="h-screen w-full flex flex-col justify-between items-center py-6 px-4 overflow-hidden bg-transparent text-[#f8fafc] antialiased select-none relative">
       
-      {/* Fullscreen 3D WebGL Canvas Backdrop (statically framed robots) */}
-      <CanvasContainer />
+      {/* Fullscreen 3D WebGL Canvas Backdrop */}
+      <AmbientGridBackground />
 
       {/* Header */}
       <header className="relative z-10 w-full max-w-5xl flex items-center justify-between py-2.5 px-4 bg-white/[0.01] backdrop-blur-md border border-white/5 rounded-full shadow-[0_0_15px_rgba(0,0,0,0.1)]">
@@ -48,3 +48,5 @@ function App() {
 }
 
 export default App;
+
+
