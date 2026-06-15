@@ -6,7 +6,7 @@ export default {
     const UPSTREAM = "https://origin.nestial.in";
     
     // 2. Maintenance Page Host (Cloudflare Pages URL)
-    const MAINTENANCE_PAGE = "https://nestial-maintainance-page.pages.dev";
+    const MAINTENANCE_PAGE = "https://maintenance.nestial.in";
     
     const upstreamUrl = UPSTREAM + url.pathname + url.search;
     
